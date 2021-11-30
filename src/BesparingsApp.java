@@ -1,7 +1,12 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JTextArea;
 
-public class BesparingsApp {
+public class BesparingsApp implements ActionListener {
     private ArrayList<Student> students;
     private ArrayList<Landlord> landlords;
     private ArrayList<Building> buildings;
@@ -31,13 +36,8 @@ public class BesparingsApp {
 
     public boolean addStudent(String firstName, String lastName, String email){
         Student newStudent = new Student(firstName, lastName, email);
-        if(students.contains(newStudent)){
-            return false;
-        }
-        else{
-            students.add(newStudent);
-            return true;
-        }
+        students.add(newStudent);
+        return true;
     }
 
     public boolean addLandlord(String firstName, String lastName, String email, String telephoneNR){
@@ -57,15 +57,15 @@ public class BesparingsApp {
         Scanner keyboard = new Scanner(System.in);
         String firstName, lastName, email;
 
-        System.out.println("Geef de voornaam van de student in.");
+        System.out.println("Please type the firstname of the student.");
         firstName = keyboard.next();
-        System.out.println("Geef de achternaam van de student in.");
+        System.out.println("Please type the name of the student.");
         lastName = keyboard.next();
-        System.out.println("Geef het email adress van de student in.");
+        System.out.println("Please type the email of the student.");
         email = keyboard.next();
 
-        if(addStudent(firstName, lastName, email)==true){System.out.println("De student is toegevoegd!");}
-        else{System.out.println("Deze student staat al in onze database!");}
+        if(addStudent(firstName, lastName, email)==true){System.out.println("The student is added to the database!");}
+        else{System.out.println("Our database already contains this student!");}
 
 
     }
@@ -79,26 +79,29 @@ public class BesparingsApp {
         Scanner keyboard = new Scanner(System.in);
         String firstName, lastName, email, telephoneNR;
 
-        System.out.println("Geef de voornaam van de kotbaas in.");
+        System.out.println("Please type the firstname of the landlord.");
         firstName = keyboard.next();
-        System.out.println("Geef de achternaam van de kotbaas in.");
+        System.out.println("Please type the name of the landlord.");
         lastName = keyboard.next();
-        System.out.println("Geef het email adress van de kotbaas in.");
+        System.out.println("Please type the email of the landlord.");
         email = keyboard.next();
-        System.out.println("Geef het telelfoonnummer van de kotbaas in.");
+        System.out.println("Please type the telephone number of the landlord.");
         telephoneNR = keyboard.next();
 
         if(addLandlord(firstName, lastName, email, telephoneNR)==true){System.out.println("De kotbaas is toegevoegd!");}
         else{System.out.println("Deze kotbaas staat al in onze database!");}
     }
 
-    public void studentenActiePopUP(String firstName, String lastName, String email, int studentenNR){
+    public void studentsActiePopUP(String firstName, String lastName, String email){
         Scanner keyboard = new Scanner(System.in);
         int answer = 0;
-        System.out.println("Welkom "+firstName+" "+lastName+", waar bent u in geïnteresseerd?");
+
+
+        System.out.println("Welcome "+firstName+" "+lastName+", where are you interested in?");
         System.out.println("1) Adding, changing or deleting of appliances?"+"\n"+
                            "2) Energy conservation menu?"+"\n"+
                            "3) Energy consumption/conservation report?");
+
         answer = keyboard.nextInt();
         switch (answer){
             case 1:
@@ -111,8 +114,39 @@ public class BesparingsApp {
 
     }
 
-    public void appliancesPopUp(){
 
+    public void landlordsActiePopUp(String firstName, String lastName, String email, String telephoneNR){
+        Scanner keyboard = new Scanner(System.in);
+        int answer = 0;
+
+        System.out.println("Welcome "+firstName+" "+lastName+", where are you interested in?");
+        System.out.println("1) Adjusting student/contact person list?"+"\n"+
+                            "2) Registering energy consumption?"+"\n"+
+                            "3) Energy consumption/conservation report?");
+        answer = keyboard.nextInt();
+        switch(answer){
+            case 1:
+                adjustingPersonListPopUp();
+                break;
+            case 2:
+                registeringConsumptionPopUp();
+                break;
+            case 3:
+                reportPopUp();
+
+        }
+    }
+
+    public void adjustingPersonListPopUp(){
+
+    }
+
+    public void registeringConsumptionPopUp(){
+
+    }
+
+    public void appliancesPopUp(){
+        System.out.println();
     }
 
     public void conservationMenuPopUp(){
@@ -125,74 +159,88 @@ public class BesparingsApp {
 
 
 
+    public void studentOrLandlordCheck(){
+
+        Scanner keyboard = new Scanner(System.in);
+        String answer = null, naam, voornaam, email, telefoonNR;
+        int invoer = 0, ID;
+
+        System.out.println("Are you a student or a landlord?");
+        answer = keyboard.next();
+        if(answer.equals("student")){
+            System.out.println("Please type your first name, name and email.");
+            voornaam = keyboard.next();
+            naam = keyboard.next();
+            email = keyboard.next();
+            System.out.println("Please type your student number.");
+            ID = keyboard.nextInt();
+            Student newStudent = new Student(voornaam, naam, email);
+            newStudent.setStudentID(ID);
+            System.out.println(this.students);
+            if(students.contains(newStudent)){
+                System.out.println("The database contains your ID!");
+                studentsActiePopUP(voornaam, naam, email);
+            }
+
+            else{
+                System.out.println("U are not yet in the system, would you like to add yourself?");
+                String antwoord1 = keyboard.next();
+                if(antwoord1.equals("yes")||antwoord1.equals("Yes")||antwoord1.equals("YES")){
+                    addStudentInput();
+                }
+                else {
+                    System.exit(0);
+                }
+            }
+        }
+
+        else if(answer.equals("Landlord")&&answer.equals("landlord")){
+            System.out.println("Please type your first name, name, email and telephone number.");
+            voornaam = keyboard.next();
+            naam = keyboard.next();
+            email = keyboard.next();
+            telefoonNR = keyboard.next();
+            System.out.println("Please type your landlordID number.");
+            ID = keyboard.nextInt();
+            Landlord newLandlord = new Landlord(voornaam, naam, email, telefoonNR);
+            newLandlord.setLandlordID(ID);
+            System.out.println(this.landlords);
+            if(landlords.contains(newLandlord)){
+                System.out.println("The database contains your ID!");
+                landlordsActiePopUp(voornaam, naam, email, telefoonNR);
+            }
+
+            else{
+                System.out.println("U are not yet in the system, would you like to add yourself?");
+                String antwoord1 = keyboard.next();
+                if(antwoord1.equals("yes")||antwoord1.equals("Yes")||antwoord1.equals("YES")){
+                    addLandlordInput();
+                }
+                else {
+                    System.exit(0);
+                }
+            }
+        }
+
+        else{
+            System.exit(0);
+        }
+
+    }
+
+
 
 
     public static void main(String[] args){
 
         BesparingsApp app = new BesparingsApp();
         app.addStudent("Leon", "Vanhooren", "leon.vanhooren@ugent.be");
+        app.addStudent("Milan", "Vissers", "milan.vissers@ugent.be");
+        app.addStudent("Hanne", "Willemkens", "hanne.willemkens@ugent.be");
 
-        Scanner keyboard = new Scanner(System.in);
-        String answer = null, naam, voornaam, email;
-        int invoer = 0, ID;
+        app.studentOrLandlordCheck();
 
-        System.out.println("Bent u een student of een kotbaas?");
-        answer = keyboard.next();
-        if(answer.equals("student")){
-            System.out.println("Geef uw voornaam, naam, email.");
-            voornaam = keyboard.next();
-            naam = keyboard.next();
-            email = keyboard.next();
-            System.out.println("Geef uw studentennummer in.");
-            ID = keyboard.nextInt();
-            Student newStudent = new Student(voornaam, naam, email);
-            newStudent.setStudentID(ID);
-            if(app.checkStudent(newStudent)==true){
-                System.out.println("U bevindt zich in het systeem.");
-                app.studentenActiePopUP(voornaam, naam, email, ID);
-            }
 
-            else{
-               System.out.println("U bevindt zich nog niet in het systeem. Wenst u uwzelf toe te voegen?");
-               String antwoord1 = keyboard.next();
-               if(antwoord1.equals("ja")||antwoord1.equals("Ja")||antwoord1.equals("JA")){
-                   app.addStudentInput();
-                   String voornaam1 = app.students.get(app.students.size()).getFirstName();
-                   String achternaam1 = app.students.get(app.students.size()).getLastName();
-                   String email1 = app.students.get(app.students.size()).getEmail();
-                   int ID1 = app.students.get(app.students.size()).getStudentID();
-                   app.studentenActiePopUP(voornaam1, achternaam1, email1, ID1-1 );
-               }
-               else {
-                   System.exit(0);
-               }
-            }
-        }
-        else{}
-        /*
-        do {
-            System.out.println("Welke actie wilt u uitvoeren?" + "\n" +
-                    "--> Toevoegen van een student? Druk op 1!" +"\n"+
-                    "--> Toevoegen van een kotbaas? Druk op 2!" +"\n"+
-                    "--> Toevoegen van een gebouw? Druk op 3!" +"\n"
-            );
-            invoer = keyboard.nextInt();
-
-            switch (invoer) {
-                case 1:
-                    app.addStudentInput();
-                    break;
-                case 2:
-                    app.addLandlordInput();
-                    break;
-                case 3:
-                    break;
-
-            }
-            System.out.println("Wilt u nog iets doen?");
-            answer = keyboard.next();
-        }
-        while(answer.equals("Ja")||answer.equals("ja")||answer.equals("JA"));*/
        /*
         Landlord landlord1 = new Landlord("Leon", "Vanhooren", "leon.vanhooren@ugent.be", "048728557");
         Building building = new Building("Timmermansstraat", "21", "8340", "Sijsele", "België");
@@ -206,4 +254,8 @@ public class BesparingsApp {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
