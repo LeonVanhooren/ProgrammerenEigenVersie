@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JTextArea;
 
-public class BesparingsApp implements ActionListener {
+public class BesparingsApp {
     private ArrayList<Student> students;
     private ArrayList<Landlord> landlords;
     private ArrayList<Building> buildings;
@@ -96,7 +96,7 @@ public class BesparingsApp implements ActionListener {
         int answer = 0;
 
 
-        System.out.println("Welcome "+firstName+" "+lastName+", where are you interested in?");
+        System.out.println("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?");
         System.out.println("1) Adding, changing or deleting of appliances?"+"\n"+
                            "2) Energy conservation menu?"+"\n"+
                            "3) Energy consumption/conservation report?");
@@ -118,7 +118,7 @@ public class BesparingsApp implements ActionListener {
         Scanner keyboard = new Scanner(System.in);
         int answer = 0;
 
-        System.out.println("Welcome "+firstName+" "+lastName+", where are you interested in?");
+        System.out.println("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?");
         System.out.println("1) Adjusting student/contact person list?"+"\n"+
                             "2) Registering energy consumption?"+"\n"+
                             "3) Energy consumption/conservation report?");
@@ -132,7 +132,7 @@ public class BesparingsApp implements ActionListener {
                 break;
             case 3:
                 reportPopUp();
-
+                break;
         }
     }
 
@@ -164,11 +164,11 @@ public class BesparingsApp implements ActionListener {
         String answer = null, naam, voornaam, email, telefoonNR;
         int invoer = 0, ID;
 
-        System.out.println("Are you a student or a landlord?");
+        System.out.println("\n"+"Are you a student or a landlord?");
         answer = keyboard.next();
 
         if(answer.equals("student")){
-            System.out.println("Please type your first name, name and email.");
+            System.out.println("\n"+"Please type your first name, name and email.");
             voornaam = keyboard.next();
             naam = keyboard.next();
             email = keyboard.next();
@@ -183,7 +183,7 @@ public class BesparingsApp implements ActionListener {
             }
 
             else{
-                System.out.println("U are not yet in the system, would you like to add yourself?");
+                System.out.println("\n"+"U are not yet in the system, would you like to add yourself?");
                 String antwoord1 = keyboard.next();
                 if(antwoord1.equals("yes")||antwoord1.equals("Yes")||antwoord1.equals("YES")){
                     addStudentInput();
@@ -195,7 +195,7 @@ public class BesparingsApp implements ActionListener {
         }
 
         else if(answer.equals("Landlord")||answer.equals("landlord")){
-            System.out.println("Please type your first name, name, email and telephone number.");
+            System.out.println("\n"+"Please type your first name, name, email and telephone number.");
             voornaam = keyboard.next();
             naam = keyboard.next();
             email = keyboard.next();
@@ -211,7 +211,7 @@ public class BesparingsApp implements ActionListener {
             }
 
             else{
-                System.out.println("U are not yet in the system, would you like to add yourself?");
+                System.out.println("\n"+"U are not yet in the system, would you like to add yourself?");
                 String antwoord1 = keyboard.next();
                 if(antwoord1.equals("yes")||antwoord1.equals("Yes")||antwoord1.equals("YES")){
                     addLandlordInput();
@@ -255,8 +255,4 @@ public class BesparingsApp implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
 }

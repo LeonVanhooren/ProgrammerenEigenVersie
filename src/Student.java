@@ -8,6 +8,7 @@ public class Student {
 
     public Student(String firstName, String lastName, String email){
         this.studentID = id +1;
+        id++;
         this.name = firstName + " " + lastName;
         this.firstName = firstName;
         this.lastName = lastName;
