@@ -67,4 +67,10 @@ public class Student {
         return Objects.hash(name, studentID);
     }
 
+    public String toString(){
+        String output=null;
+        output = firstName+", "+lastName+", "+email+", "+studentID;
+        return output;
+    }
+
 }

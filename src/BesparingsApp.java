@@ -42,9 +42,8 @@ public class BesparingsApp implements ActionListener {
 
     public boolean addLandlord(String firstName, String lastName, String email, String telephoneNR){
         Landlord newLandlord = new Landlord(firstName, lastName, email, telephoneNR);
-        if(landlords.contains(newLandlord)){return false;}
-        else{landlords.add(newLandlord);
-        return true;}
+        landlords.add(newLandlord);
+        return true;
     }
 
     public void addBuilding(String street, String number, String zip, String city, String country){
@@ -167,6 +166,7 @@ public class BesparingsApp implements ActionListener {
 
         System.out.println("Are you a student or a landlord?");
         answer = keyboard.next();
+
         if(answer.equals("student")){
             System.out.println("Please type your first name, name and email.");
             voornaam = keyboard.next();
@@ -194,7 +194,7 @@ public class BesparingsApp implements ActionListener {
             }
         }
 
-        else if(answer.equals("Landlord")&&answer.equals("landlord")){
+        else if(answer.equals("Landlord")||answer.equals("landlord")){
             System.out.println("Please type your first name, name, email and telephone number.");
             voornaam = keyboard.next();
             naam = keyboard.next();
@@ -237,6 +237,7 @@ public class BesparingsApp implements ActionListener {
         app.addStudent("Leon", "Vanhooren", "leon.vanhooren@ugent.be");
         app.addStudent("Milan", "Vissers", "milan.vissers@ugent.be");
         app.addStudent("Hanne", "Willemkens", "hanne.willemkens@ugent.be");
+        app.addLandlord("Leon", "Vanhooren", "leon.vanhooren@outlook.be", "0487285571");
 
         app.studentOrLandlordCheck();
 
