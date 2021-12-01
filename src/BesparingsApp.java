@@ -14,6 +14,7 @@ public class BesparingsApp {
     private ArrayList<Owns> ownerships;
     private ArrayList<Contract> contracts;
     private ArrayList<Room> rooms;
+    private ArrayList<Lease> leases;
 
     public BesparingsApp(){
         this.students = new ArrayList<>();
@@ -22,6 +23,8 @@ public class BesparingsApp {
         this.ownerships = new ArrayList<>();
         this.contracts = new ArrayList<>();
         this.rooms = new ArrayList<>();
+        this.leases = new ArrayList<>();
+
 
     }
 
@@ -163,6 +166,11 @@ public class BesparingsApp {
                     Student newStudent = new Student(keyboard.next(), keyboard.next(), keyboard.next());
                     int studentNR = keyboard.nextInt();
                     newStudent.setStudentID(studentNR);
+                    System.out.println("Which room (room number), in which building (buildingID)?");
+                    int roomNR = keyboard.nextInt();
+                    int buildingID = keyboard.nextInt();
+                    System.out.println("Pleas type your landlordID for confirmation.");
+                    int landlordID = keyboard.nextInt();
 
                 }
                 else{
