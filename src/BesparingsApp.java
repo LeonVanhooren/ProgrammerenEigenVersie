@@ -1,8 +1,3 @@
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,9 +110,7 @@ public class BesparingsApp {
         Scanner keyboard = new Scanner(System.in);
         String answer;
 
-
-
-        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+
+        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+"\n"+
         "1) Adding, changing or deleting of appliances?"+"\n"+
                 "2) Energy conservation menu?"+"\n"+
                 "3) Energy consumption/conservation report?");
