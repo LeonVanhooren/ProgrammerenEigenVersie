@@ -1,3 +1,3 @@
 public class Action {
-    private String hallo;
+    private String pushvanthomas;
 }
