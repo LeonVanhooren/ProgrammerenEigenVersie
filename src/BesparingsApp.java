@@ -112,26 +112,8 @@ public class BesparingsApp {
     public void studentsActiePopUP(String firstName, String lastName, String email){
 
 
-        FlowPane root = new FlowPane();
-        root.setVgap(5);
-        root.setHgap(5);
-        root.setPadding(new Insets(10,10,10,10));
-
-        root.getChildren().add(new Label("Welcome "+firstName+" "+lastName+", where are you interested in?"),0,0);
-        root.getChildren().add(new Button ("1) Adding, changing or deleting of appliances?"));
-        root.add(new Label("2) Energy dconservation menu?"),0,2);
-        root.add(new Label("3) Energy consumption/conservation report?"),0,3);
-
-        Button btn1 = new Button("1");
-        Button btn2 = new Button("2");
-        Button btn3 = new Button("3");
-
-        Scene scene = new Scene(root, 100, 50);
-
-
-
-        /*Scanner keyboard = new Scanner(System.in);
-        int answer = 0;
+        Scanner keyboard = new Scanner(System.in);
+        String answer;
 
 
         System.out.println("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?");
@@ -139,16 +121,19 @@ public class BesparingsApp {
                            "2) Energy conservation menu?"+"\n"+
                            "3) Energy consumption/conservation report?");
 
-        answer = keyboard.nextInt();
+        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+
+        "1) Adding, changing or deleting of appliances?"+"\n"+
+                "2) Energy conservation menu?"+"\n"+
+                "3) Energy consumption/conservation report?");
         switch (answer){
-            case 1:
+            case "1":
                 appliancesPopUp();
-            case 2:
+            case "2":
                 conservationMenuPopUp();
-            case 3:
+            case "3":
                 reportPopUp();
         }
-*/
+
     }
 
 
