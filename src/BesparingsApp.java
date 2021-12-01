@@ -119,7 +119,7 @@ public class BesparingsApp {
 
         root.getChildren().add(new Label("Welcome "+firstName+" "+lastName+", where are you interested in?"),0,0);
         root.add(new Label("1) Adding, changing or deleting of appliances?"),0,1);
-        root.add(new Label("2) Energy conservation menu?"),0,2);
+        root.add(new Label("2) Energy dconservation menu?"),0,2);
         root.add(new Label("3) Energy consumption/conservation report?"),0,3);
 
         Button btn1 = new Button("1");
