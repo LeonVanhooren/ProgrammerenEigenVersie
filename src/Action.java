@@ -1,4 +1,4 @@
 public class Action {
-    private String ditf;
+    private String dif;
 
 }
