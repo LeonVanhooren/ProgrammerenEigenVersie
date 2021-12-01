@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JTextArea;
@@ -12,6 +13,7 @@ public class BesparingsApp {
     private ArrayList<Building> buildings;
     private ArrayList<Owns> ownerships;
     private ArrayList<Contract> contracts;
+    private ArrayList<Room> rooms;
 
     public BesparingsApp(){
         this.students = new ArrayList<>();
@@ -19,6 +21,7 @@ public class BesparingsApp {
         this.buildings = new ArrayList<>();
         this.ownerships = new ArrayList<>();
         this.contracts = new ArrayList<>();
+        this.rooms = new ArrayList<>();
 
     }
 
@@ -26,6 +29,11 @@ public class BesparingsApp {
         Owns newOwnership = new Owns(building, landlord);
         if(ownerships.contains(newOwnership)){System.exit(0);}
         else{ownerships.add(newOwnership);}
+    }
+
+    public void addRoom(Student student, Building building, int roomNR){
+        Room newRoom = new Room(student, building, roomNR);
+        rooms.add(newRoom);
     }
 
     public void addLease(Student tenant, Landlord owner){
@@ -65,6 +73,7 @@ public class BesparingsApp {
 
         if(addStudent(firstName, lastName, email)==true){System.out.println("The student is added to the database!");}
         else{System.out.println("Our database already contains this student!");}
+
 
 
     }
@@ -137,6 +146,37 @@ public class BesparingsApp {
     }
 
     public void adjustingPersonListPopUp(){
+        Scanner keyboard = new Scanner(System.in);
+        int answer = 0;
+
+        System.out.println("\n"+"Which option are you interested in?"+"\n"+
+                "1) Adding a new student to a room --> new contract!"+"\n"+
+                "2) Removing a student from a room --> break contract!"+"\n"+
+                "3) Changing a student's details --> changing contract!");
+
+        answer = keyboard.nextInt();
+        switch(answer){
+            case 1:
+                System.out.println("Is the student already known in the system?");
+                if(keyboard.next().equals("yes")||keyboard.next().equals("Yes")){
+                    System.out.println("Type the firstname, name, email and student number of the student you would like to add to a room.");
+                    Student newStudent = new Student(keyboard.next(), keyboard.next(), keyboard.next());
+                    int studentNR = keyboard.nextInt();
+                    newStudent.setStudentID(studentNR);
+
+                }
+                else{
+
+                }
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+        }
+
 
     }
 
