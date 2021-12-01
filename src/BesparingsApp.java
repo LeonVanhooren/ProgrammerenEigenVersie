@@ -1,12 +1,10 @@
 
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.JTextArea;
+
 
 public class BesparingsApp {
     private ArrayList<Student> students;
