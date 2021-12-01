@@ -1,4 +1,3 @@
 public class Action {
-    private String dif;
-
+    private String hanneHasPushedToYou;
 }
