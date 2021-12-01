@@ -212,7 +212,7 @@ public class BesparingsApp {
         String answer = null, naam, voornaam, email, telefoonNR;
         int invoer = 0, ID;
 
-        System.out.println("\n"+"Are you a student or a landlord");
+        System.out.println("\n"+"Are you a student or a landlord?");
         answer = keyboard.next();
 
         if(answer.equals("student")){
