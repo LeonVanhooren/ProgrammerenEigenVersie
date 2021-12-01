@@ -116,10 +116,6 @@ public class BesparingsApp {
         String answer;
 
 
-        System.out.println("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?");
-        System.out.println("1) Adding, changing or deleting of appliances?"+"\n"+
-                           "2) Energy conservation menu?"+"\n"+
-                           "3) Energy consumption/conservation report?");
 
         answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+
         "1) Adding, changing or deleting of appliances?"+"\n"+
