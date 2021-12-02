@@ -1,5 +1,8 @@
 
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -102,50 +105,52 @@ public class BesparingsApp {
         else{System.out.println("Deze kotbaas staat al in onze database!");}
     }
 
-    public void studentsActiePopUP(String firstName, String lastName, String email){
+    public void studentsActiePopUP(Student student){
 
 
         Scanner keyboard = new Scanner(System.in);
         String answer;
 
-        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+"\n"+
+        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+student.getFirstName()+" "+student.getLastName()+", where are you interested in?"+"\n"+
         "1) Adding, changing or deleting of appliances?"+"\n"+
                 "2) Energy conservation menu?"+"\n"+
                 "3) Energy consumption/conservation report?");
+
+
         switch (answer){
             case "1":
-                appliancesPopUp();
+                appliancesPopUp(student);
             case "2":
-                conservationMenuPopUp();
+                conservationMenuPopUp(student);
             case "3":
-                reportPopUp();
+                reportPopUpStudent(student);
         }
 
     }
 
 
-    public void landlordsActiePopUp(String firstName, String lastName, String email, String telephoneNR){
+    public void landlordsActiePopUp(Landlord landlord){
         Scanner keyboard = new Scanner(System.in);
         String answer;
 
-        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+firstName+" "+lastName+", where are you interested in?"+"\n"
+        answer = JOptionPane.showInputDialog("\n"+"\n"+"\n"+"Welcome "+landlord.getName()+", where are you interested in?"+"\n"
                  +"1) Adjusting student/contact person list?"+"\n"+
                 "2) Registering energy consumption?"+"\n"+
                 "3) Energy consumption/conservation report?");
         switch(answer){
             case "1":
-                adjustingPersonListPopUp();
+                adjustingPersonListPopUp(landlord);
                 break;
             case "2":
-                registeringConsumptionPopUp();
+                registeringConsumptionPopUp(landlord);
                 break;
             case "3":
-                reportPopUp();
+                reportPopUpLandlord(landlord);
                 break;
         }
     }
 
-    public void adjustingPersonListPopUp(){
+    public void adjustingPersonListPopUp(Landlord landlord){
         Scanner keyboard = new Scanner(System.in);
         int answer = 0;
 
@@ -185,19 +190,25 @@ public class BesparingsApp {
 
     }
 
-    public void registeringConsumptionPopUp(){
+    public void registeringConsumptionPopUp(Landlord landlord){
 
     }
 
-    public void appliancesPopUp(){
+    public void appliancesPopUp(Student student){
         System.out.println();
     }
 
-    public void conservationMenuPopUp(){
+    public void conservationMenuPopUp(Student student){
 
     }
 
-    public void reportPopUp(){
+    public void reportPopUpLandlord(Landlord landlord){
+
+
+    }
+
+    public void reportPopUpStudent(Student student){
+
 
     }
 
@@ -207,25 +218,44 @@ public class BesparingsApp {
 
 
         Scanner keyboard = new Scanner(System.in);
-        String answer = null, naam, voornaam, email, telefoonNR;
-        int invoer = 0, ID;
+        String answer = null;
+        int invoer = 0, ID=0;
 
-        answer = JOptionPane.showInputDialog("Are you a student or a landlord?");
+        final JPanel scene = new JPanel();
+        final JLabel titel = new JLabel("Are you a student or a landlord?");
+        final JRadioButton student = new JRadioButton("Student");
+        final JRadioButton landlord = new JRadioButton("landlord");
 
-        if(answer.equals("student")){
-            voornaam = JOptionPane.showInputDialog("\n"+"Please type your firstname.");
-            naam = JOptionPane.showInputDialog("\n"+"Please type your lastname.");
-            email = JOptionPane.showInputDialog("\n"+"Please type your email.");
-            ID = Integer.parseInt(JOptionPane.showInputDialog("\n"+"Please type your studentID."));
-            Student newStudent = new Student(voornaam, naam, email);
-            newStudent.setStudentID(ID);
+        scene.add(titel);
+        scene.add(student);
+        scene.add(landlord);
+        JOptionPane.showMessageDialog(null, scene);
+
+        if(student.isSelected()){
+
+            JTextField firstName = new JTextField();
+            JTextField email = new JTextField();
+            JTextField studentID = new JTextField();
+            JTextField lastName = new JTextField();
+            Object[] message = {
+                    "First name:", firstName,
+                    "Last name:", lastName,
+                    "Email:", email,
+                    "StudentID:", studentID
+
+            };
+
+            int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+
+            Student newStudent = new Student(firstName.getText(), lastName.getText(), email.getText());
+            newStudent.setStudentID(Integer.parseInt(studentID.getText()));
 
             if(students.contains(newStudent)){
-                JOptionPane.showInputDialog(null, "The database contains your ID!");
+                JOptionPane.showMessageDialog(null, "The database contains your ID!");
                 int answer1 = JOptionPane.showConfirmDialog(null, "Do you want to continue?", "Click yes or no", JOptionPane.YES_NO_OPTION);
 
                 if(answer1 == JOptionPane.YES_OPTION){
-                    studentsActiePopUP(voornaam, naam, email);
+                    studentsActiePopUP(newStudent);
                 }
 
                 else if(answer1 == JOptionPane.NO_OPTION){
@@ -239,31 +269,42 @@ public class BesparingsApp {
             }
 
             else{
-                System.out.println("\n"+"U are not yet in the system, would you like to add yourself?");
-                String antwoord1 = keyboard.next();
-                if(antwoord1.equals("yes")||antwoord1.equals("Yes")||antwoord1.equals("YES")){
+                int answer2 =JOptionPane.showConfirmDialog(null,"\n"+"U are not yet in the system, would you like to add yourself?", "Click yes or no", JOptionPane.YES_NO_OPTION);
+                if(answer2 == JOptionPane.YES_OPTION){
                     addStudentInput();
                 }
                 else {
-                    System.exit(0);
+                    studentOrLandlordCheck();
                 }
             }
         }
 
-        else if(answer.equals("Landlord")||answer.equals("landlord")){
-            System.out.println("\n"+"Please type your first name, name, email and telephone number.");
-            voornaam = keyboard.next();
-            naam = keyboard.next();
-            email = keyboard.next();
-            telefoonNR = keyboard.next();
-            System.out.println("Please type your landlordID number.");
-            ID = keyboard.nextInt();
-            Landlord newLandlord = new Landlord(voornaam, naam, email, telefoonNR);
-            newLandlord.setLandlordID(ID);
+        else if(landlord.isSelected()){
+
+            JTextField firstName = new JTextField();
+            JTextField email = new JTextField();
+            JTextField landlordID = new JTextField();
+            JTextField lastName = new JTextField();
+            JTextField telefoonNR = new JTextField();
+            Object[] message = {
+                    "First name:", firstName,
+                    "Last name:", lastName,
+                    "Email:", email,
+                    "Telephone number", telefoonNR,
+                    "LandlordID:", landlordID
+
+            };
+
+            int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+
+
+            Landlord newLandlord = new Landlord(firstName.getText(), lastName.getText(), email.getText(), telefoonNR.getText());
+            newLandlord.setLandlordID(Integer.parseInt(landlordID.getText()));
             System.out.println(this.landlords);
+
             if(landlords.contains(newLandlord)){
                 System.out.println("The database contains your ID!");
-                landlordsActiePopUp(voornaam, naam, email, telefoonNR);
+                landlordsActiePopUp(newLandlord);
             }
 
             else{
