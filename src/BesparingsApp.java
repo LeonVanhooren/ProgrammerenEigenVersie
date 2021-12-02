@@ -190,6 +190,7 @@ public class BesparingsApp {
 
     }
 
+
     public void registeringConsumptionPopUp(Landlord landlord){
 
     }
@@ -222,9 +223,9 @@ public class BesparingsApp {
         int invoer = 0, ID=0;
 
         final JPanel scene = new JPanel();
-        final JLabel titel = new JLabel("Are you a student or a landlord?");
-        final JRadioButton student = new JRadioButton("Student");
-        final JRadioButton landlord = new JRadioButton("landlord");
+        final JLabel titel = new JLabel("Are you a student or a landlord?"+"\n");
+        final JButton student = new JButton("Student");
+        final JButton landlord = new JButton("landlord");
 
         scene.add(titel);
         scene.add(student);
@@ -322,6 +323,28 @@ public class BesparingsApp {
         else{
             System.exit(0);
         }
+
+    }
+
+    public void startApp(){
+        JTextField firstName = new JTextField();
+        JTextField email = new JTextField();
+        JTextField studentID = new JTextField();
+        JTextField lastName = new JTextField();
+        Object[] message = {
+                "First name:", firstName,
+                "Last name:", lastName,
+                "Email:", email,
+                "StudentID:", studentID
+
+        };
+
+        JButton student = new JButton("Student");
+        JButton landlord = new JButton("Landlord");
+
+
+        int option = JOptionPane.showConfirmDialog(null, message, "Login", JOptionPane.OK_CANCEL_OPTION);
+
 
     }
 
