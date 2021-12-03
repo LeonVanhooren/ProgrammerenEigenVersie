@@ -35,7 +35,7 @@ import java.util.ArrayList;
         if(student.isSelected()){studentMenu();}
         if(landlord.isSelected()){landlordMenu();}
         if(option == JOptionPane.CANCEL_OPTION){System.exit(0);}
-    }
+    } //JRadioButton kan meerdere knoppen tergelijk selecteren dus Exception maken met maar 1 optie mogelijk?
 
     public void studentMenu(){
         JRadioButton register = new JRadioButton("Register");
@@ -49,7 +49,7 @@ import java.util.ArrayList;
         if(login.isSelected()){studentLogin();}
         if(option == JOptionPane.CANCEL_OPTION){menu();}
 
-    }
+    } //Ook hier een exception hiervoor
 
     public void studentRegister(){
         JTextField firstName = new JTextField();
@@ -117,7 +117,7 @@ import java.util.ArrayList;
 
     }
 
-    public boolean studentDatabaseCheck(){return false;} //Deze methode moet checken als de email en het password ingevoerd
+    public boolean studentDatabaseCheck(){return true;} //Deze methode moet checken als de email en het password ingevoerd
                                                          //in studentlogin hierboven kloppen met een account in de DB, dit kan pas als de DB aangesloten is
 
 
@@ -133,7 +133,7 @@ import java.util.ArrayList;
         if(login.isSelected()){landlordLogin();}
         if(option == JOptionPane.CANCEL_OPTION){menu();}
 
-    }
+    } //Ook hier een exception hiervoor
 
     public void landlordRegister(){
 
@@ -169,7 +169,7 @@ import java.util.ArrayList;
 
         }
         if(option1 == JOptionPane.CANCEL_OPTION){landlordMenu();}
-    }
+    } //Ook hier een exception hiervoor
 
     public boolean landlordPresent(){return true;} //methode die checkt als landlord aanwezig is in de DB
 
@@ -205,9 +205,62 @@ import java.util.ArrayList;
 
 
 
-    public void studentOptionsMenu(){}
+    public void studentOptionsMenu(){
 
-    public void landlordOptionsMenu(){}
+        JRadioButton appliances = new JRadioButton("Adding, changing or deleting of appliances?");
+        JRadioButton conservation = new JRadioButton("Energy conservation menu?");
+        JRadioButton report = new JRadioButton("Energy consumption/conservation report?");
+
+
+        Object[] message = {"Choose",appliances,conservation, report};
+
+        int option = JOptionPane.showConfirmDialog(null, message, "Student actions menu", JOptionPane.CANCEL_OPTION);
+
+        if(appliances.isSelected()){appliancesMenu();}
+        if(conservation.isSelected()){conservationMenu();}
+        if(report.isSelected()){studentReportMenu();}
+        if(option == JOptionPane.CANCEL_OPTION){System.exit(0);}
+
+
+    }
+
+    public void appliancesMenu(){
+
+    }
+    public void conservationMenu(){
+
+    }
+    public void studentReportMenu(){
+
+    }
+
+    public void landlordOptionsMenu(){
+        JRadioButton persons = new JRadioButton("Adjusting student/contact person list?");
+        JRadioButton consumption = new JRadioButton("Registering energy consumption?");
+        JRadioButton report = new JRadioButton("Energy consumption/conservation report?");
+
+        Object[] message = {"Choose", persons, consumption, report};
+
+        int option = JOptionPane.showConfirmDialog(null, message, "Landlord actions menu", JOptionPane.OK_OPTION);
+
+        if(persons.isSelected()){personsMenu();}
+        if(consumption.isSelected()){consumptionMenu();}
+        if(report.isSelected()){landlordReportMenu();}
+        if(option == JOptionPane.CANCEL_OPTION){System.exit(0);}
+
+    }
+
+    public void personsMenu(){
+
+    }
+    public void consumptionMenu(){
+
+    }
+    public void landlordReportMenu(){
+
+    }
+
+
 
 
     public static void main(String[] args){
