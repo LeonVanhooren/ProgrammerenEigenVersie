@@ -1,8 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 
-    public class App {
+    public class App implements ActionListener {
         private ArrayList<Student> students;
         private ArrayList<Landlord> landlords;
         private ArrayList<Building> buildings;
@@ -11,7 +15,7 @@ import java.util.ArrayList;
         private ArrayList<Room> rooms;
         private ArrayList<Lease> leases;
 
-        public App() {
+        public App()  {
             this.students = new ArrayList<>();
             this.landlords = new ArrayList<>();
             this.buildings = new ArrayList<>();
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 
 
         }
+
+        //We moeten een exception throwen als meerdere vakjes gekozen worden bij de methodes of een manier vinden om te programmeren dat er maar 1 vakje gekozen kan worden!!
 
     public void menu(){
         JRadioButton student = new JRadioButton("Student");
@@ -115,7 +121,7 @@ import java.util.ArrayList;
         if(option1 == JOptionPane.CANCEL_OPTION){menu();}
 
 
-    }
+    } //vanaf hier moet elke methode de Student en Kamer object bijhouden zodanig dat die kunnen gebruikt worden om gegevens toe te voegen gekoppeld aan de juiste persoon
 
     public boolean studentDatabaseCheck(){return true;} //Deze methode moet checken als de email en het password ingevoerd
                                                          //in studentlogin hierboven kloppen met een account in de DB, dit kan pas als de DB aangesloten is
@@ -207,26 +213,117 @@ import java.util.ArrayList;
 
     public void studentOptionsMenu(){
 
-        JRadioButton appliances = new JRadioButton("Adding, changing or deleting of appliances?");
-        JRadioButton conservation = new JRadioButton("Energy conservation menu?");
-        JRadioButton report = new JRadioButton("Energy consumption/conservation report?");
+        JRadioButtonMenuItem appliances = new JRadioButtonMenuItem("Adding, changing or deleting of appliances?");
+        JRadioButtonMenuItem conservation = new JRadioButtonMenuItem("Energy conservation menu?");
+        JRadioButtonMenuItem report = new JRadioButtonMenuItem("Energy consumption/conservation report?");
 
 
-        Object[] message = {"Choose",appliances,conservation, report};
+        Object[] message = {"Choose one option!",appliances,conservation, report};
 
         int option = JOptionPane.showConfirmDialog(null, message, "Student actions menu", JOptionPane.CANCEL_OPTION);
 
         if(appliances.isSelected()){appliancesMenu();}
         if(conservation.isSelected()){conservationMenu();}
         if(report.isSelected()){studentReportMenu();}
-        if(option == JOptionPane.CANCEL_OPTION){System.exit(0);}
+        if(option == JOptionPane.CANCEL_OPTION){
+            menu();
+        }
 
 
     }
 
     public void appliancesMenu(){
 
+
+/*Change to grid layout.
+        JPanel checkPanel = new JPanel(new GridLayout(0,1));
+
+//Add check boxes to the content pane.
+
+        JCheckBox actie1 = new JCheckBox("C++");
+        JCheckBox actie2 = new JCheckBox("Java");
+        JCheckBox actie3 = new JCheckBox("Perl");
+
+
+// Create the label and add it to the content pane.
+
+        JLabel textLabel = new JLabel("Select languages");
+        checkPanel.add(textLabel);
+
+// Handle item events for the check boxes.
+
+        if(actie1.isSelected())
+
+            textLabel.setText(actie1.getText() + " is selected");
+
+        if(actie2.isSelected())
+
+            textLabel.setText(actie2.getText() + " is selected");
+
+        if(actie3.isSelected())
+
+            textLabel.setText(actie3.getText() + " is selected");
+        */
+
+
+
+            JRadioButtonMenuItem add = new JRadioButtonMenuItem("Add an appliance");
+            JRadioButtonMenuItem remove = new JRadioButtonMenuItem("Remove an existing appliance");
+            JRadioButtonMenuItem change = new JRadioButtonMenuItem("Change an existing appliance");
+
+            Object[] message = {add, remove, change};
+            int option = JOptionPane.showConfirmDialog(null, message, "Appliance menu", JOptionPane.OK_CANCEL_OPTION);
+
+            if(add.isSelected()){
+                if (addAppliance().equals("OKE"))
+                    JOptionPane.showMessageDialog(null, "Your appliance is added to the database!");
+                    addAppliance();
+                    studentOptionsMenu();
+
+                if(addAppliance().equals("DUBBEL"))
+                    JOptionPane.showMessageDialog(null, "Our database already contains your appliance! ");
+                    appliancesMenu();
+
+                if(addAppliance().equals("FOUT"))
+                    JOptionPane.showMessageDialog(null, "The information you gave is not correct!");
+                    appliancesMenu();
+            }
+            if(remove.isSelected()){
+                removeAppliance();
+            }
+            if(change.isSelected()){
+                changeAppliance();
+            }
+            if (option == JOptionPane.CANCEL_OPTION) {
+            studentOptionsMenu();
+            }
+
+
     }
+
+    public boolean removeAppliance(){return true;}
+    public String addAppliance(){
+            String name1, consumption1, efficiency1, QRCode1;
+            JTextField name = new JTextField();
+            JTextField consumption = new JTextField();
+            JTextField efficiency = new JTextField();
+            JTextField QRCode = new JTextField();
+
+            Object[] message ={"Name: ", name, "Efficiency: ", efficiency, "Consumption: ", consumption, "QR-Code: ", QRCode };
+            int option = JOptionPane.showConfirmDialog(null, message, "Add appliance menu", JOptionPane.OK_CANCEL_OPTION);
+
+            name1 = name.getText();
+            consumption1 = consumption.getText();
+            efficiency1 = efficiency.getText();
+            QRCode1 = QRCode.getText();
+
+
+
+            return "OKE";
+        }
+    public boolean changeAppliance(){return true;}
+
+
     public void conservationMenu(){
 
     }
@@ -239,7 +336,7 @@ import java.util.ArrayList;
         JRadioButton consumption = new JRadioButton("Registering energy consumption?");
         JRadioButton report = new JRadioButton("Energy consumption/conservation report?");
 
-        Object[] message = {"Choose", persons, consumption, report};
+        Object[] message = {"Choose one option", persons, consumption, report};
 
         int option = JOptionPane.showConfirmDialog(null, message, "Landlord actions menu", JOptionPane.OK_OPTION);
 
@@ -271,7 +368,10 @@ import java.util.ArrayList;
     }
 
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
 
-}
+        }
+    }
 
 
