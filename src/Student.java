@@ -2,16 +2,22 @@ import java.util.Objects;
 
 public class Student {
 
-    private String name, firstName, lastName, email;
+    private String name, firstName, lastName, email, password;
     private int studentID;
     private static int id = 0;
 
-    public Student(String firstName, String lastName, String email){
+    public Student(String firstName, String lastName, String email, String password){
         this.studentID = id +1;
         id++;
         this.name = firstName + " " + lastName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Student(String email, String password){
+        this.password = password;
         this.email = email;
     }
 
@@ -60,18 +66,11 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return studentID == student.studentID && name.equals(student.name);
+        return Objects.equals(name, student.name) && Objects.equals(firstName, student.firstName) && Objects.equals(lastName, student.lastName) && Objects.equals(email, student.email) && Objects.equals(password, student.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, studentID);
+        return Objects.hash(name, firstName, lastName, email, password);
     }
-
-    public String toString(){
-        String output=null;
-        output = firstName+", "+lastName+", "+email+", "+studentID;
-        return output;
-    }
-
 }

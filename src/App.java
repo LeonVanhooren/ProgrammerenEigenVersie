@@ -14,6 +14,8 @@ import java.util.ArrayList;
         private ArrayList<Contract> contracts;
         private ArrayList<Room> rooms;
         private ArrayList<Lease> leases;
+        private ArrayList<StudentPassword> studentPasswords;
+        private ArrayList<LandlordPassword> landlordPasswords;
 
         public App()  {
             this.students = new ArrayList<>();
@@ -23,6 +25,8 @@ import java.util.ArrayList;
             this.contracts = new ArrayList<>();
             this.rooms = new ArrayList<>();
             this.leases = new ArrayList<>();
+            this.studentPasswords = new ArrayList<>();
+            this.landlordPasswords = new ArrayList<>();
 
 
         }
@@ -72,10 +76,11 @@ import java.util.ArrayList;
         };
 
         int option1 = JOptionPane.showConfirmDialog(null, message, "Student register", JOptionPane.OK_CANCEL_OPTION);
+        Student newStudent = new Student(firstName.getText(), lastName.getText(), email.getText(), password.getText());
 
         if(option1 ==JOptionPane.OK_OPTION){
-            if(studentPresent()==false){
-                JOptionPane.showMessageDialog(null, "You have successfully added your profile!");
+            if(studentPresent(newStudent)==false){
+                JOptionPane.showMessageDialog(null, "You have successfully added your profile!"+"\n"+"Your student number: "+newStudent.getStudentID()+"\n"+"Remember this well!");
                 //Methode voor checken van correct email?
                 studentOptionsMenu();
 
@@ -83,9 +88,9 @@ import java.util.ArrayList;
             else{
 
                 Object[] message2 ={"You are already in the system!", "Do you want to log in instead?"};
-                int option2 = JOptionPane.showConfirmDialog(null, message2, "Error", JOptionPane.OK_CANCEL_OPTION);
-                if(option2==JOptionPane.OK_OPTION){studentLogin();}
-                if(option2==JOptionPane.CANCEL_OPTION){studentRegister();}
+                int option2 = JOptionPane.showConfirmDialog(null, message2, "Error", JOptionPane.YES_NO_OPTION);
+                if(option2==JOptionPane.YES_OPTION){studentLogin();}
+                if(option2==JOptionPane.NO_OPTION){studentRegister();}
             }
 
         }
@@ -93,14 +98,24 @@ import java.util.ArrayList;
 
     }
 
-    public boolean studentPresent(){return false;} //methode die checkt als de student al in de DB zit
+    public boolean studentPresent(Student student){
+            for(Student newStudent:students){
+                if(newStudent.getName().equals(student.getName())&&newStudent.getEmail().equals(student.getEmail())){
+                    return true;
+                }
+            }
+            return false;
+        } //methode die checkt als de student al in de DB zit
 
     public void studentLogin(){
+        Student errorStudent = new Student("0", "0", "0", "0");
 
         JTextField email = new JTextField();
+        JTextField studentNR = new JTextField();
         JTextField password = new JPasswordField();
         Object[] message = {
                 "Email:", email,
+                "Student number: ",studentNR,
                 "Password:", password
 
         };
@@ -108,7 +123,10 @@ import java.util.ArrayList;
         int option1 = JOptionPane.showConfirmDialog(null, message, "Student login", JOptionPane.OK_CANCEL_OPTION);
 
         if(option1 ==JOptionPane.OK_OPTION){
-            if(studentDatabaseCheck()==true){studentOptionsMenu();}
+            if(!studentDatabaseCheck(email.getText(), password.getText(), Integer.parseInt(studentNR.getText())).equals(errorStudent)){
+                JOptionPane.showMessageDialog(null,"You are successfully logged in!");
+                studentOptionsMenu();
+            }
             else{
 
                 Object[] message2 ={"The password and email are not correct!","Please try again!"};
@@ -123,8 +141,25 @@ import java.util.ArrayList;
 
     } //vanaf hier moet elke methode de Student en Kamer object bijhouden zodanig dat die kunnen gebruikt worden om gegevens toe te voegen gekoppeld aan de juiste persoon
 
-    public boolean studentDatabaseCheck(){return true;} //Deze methode moet checken als de email en het password ingevoerd
-                                                         //in studentlogin hierboven kloppen met een account in de DB, dit kan pas als de DB aangesloten is
+    public Student studentDatabaseCheck(String email, String password, int studentNR){
+            //database check methode
+        StudentPassword newStudent = new StudentPassword(email, password);
+        Student errorStudent = new Student("0", "0", "0", "0");
+        for(StudentPassword newStudentPasword :studentPasswords){
+            if(newStudentPasword.getPassword().equals(password)&&newStudentPasword.getEmail().equals(email)&&newStudentPasword.getStudentID()==studentNR){
+                int index = studentPasswords.indexOf(newStudent);  /* Student returnStudent = new Student();*/
+                System.out.println(students.get(studentNR-1).getFirstName());
+                return students.get(studentNR-1);
+            }
+        }
+        return errorStudent;
+
+         /* Student returnStudent = new Student();*/
+
+        } //dit moet dan return student zijn --> kan nu nog niet door niet aangesloten DB
+
+        //Deze methode moet checken als de email en het password ingevoerd
+         //in studentlogin hierboven kloppen met een account in de DB, dit kan pas als de DB aangesloten is
 
 
     public void landlordMenu(){
@@ -181,11 +216,14 @@ import java.util.ArrayList;
 
     public void landlordLogin(){
 
+        Landlord errorLandlord = new Landlord("0", "0", "0", "0", "0");
 
         JTextField email = new JTextField();
+        JTextField landlordNR = new JTextField();
         JTextField password = new JPasswordField();
         Object[] message = {
                 "Email:", email,
+                "Landlord ID: ",landlordNR,
                 "Password:", password
 
         };
@@ -193,7 +231,10 @@ import java.util.ArrayList;
         int option1 = JOptionPane.showConfirmDialog(null, message, "Landlord login", JOptionPane.OK_CANCEL_OPTION);
 
         if(option1 ==JOptionPane.OK_OPTION){
-            if(landlordDatabaseCheck()==true){landlordOptionsMenu();}
+            if(!landlordDatabaseCheck(email.getText(), password.getText(), Integer.parseInt(landlordNR.getText())).equals(errorLandlord)){
+                JOptionPane.showMessageDialog(null,"You are successfully logged in!");
+                landlordOptionsMenu();
+            }
             else{
 
                 Object[] message2 ={"The password and email are not correct!","Please try again!"};
@@ -207,7 +248,19 @@ import java.util.ArrayList;
 
     }
 
-    public boolean landlordDatabaseCheck(){return false;}
+    public Landlord landlordDatabaseCheck(String email, String password, int landlordNR){
+
+        LandlordPassword newLandlord = new LandlordPassword(email, password);
+        Landlord errorLandlord = new Landlord("0", "0", "0", "0", "0");
+        for(LandlordPassword newLandlordPasword :landlordPasswords){
+            if(newLandlordPasword.getPassword().equals(password)&&newLandlordPasword.getEmail().equals(email)&&newLandlordPasword.getLandlordID()== landlordNR){
+                int index = landlordPasswords.indexOf(newLandlord);  /* Student returnStudent = new Student();*/
+                System.out.println(landlords.get(index-1).getName());
+                return landlords.get(landlordNR-1);
+            }
+        }
+        return errorLandlord;
+        }
 
 
 
@@ -338,12 +391,12 @@ import java.util.ArrayList;
 
         Object[] message = {"Choose one option", persons, consumption, report};
 
-        int option = JOptionPane.showConfirmDialog(null, message, "Landlord actions menu", JOptionPane.OK_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, message, "Landlord actions menu", JOptionPane.OK_CANCEL_OPTION);
 
         if(persons.isSelected()){personsMenu();}
         if(consumption.isSelected()){consumptionMenu();}
         if(report.isSelected()){landlordReportMenu();}
-        if(option == JOptionPane.CANCEL_OPTION){System.exit(0);}
+        if(option == JOptionPane.CANCEL_OPTION){menu();}
 
     }
 
@@ -362,8 +415,20 @@ import java.util.ArrayList;
 
     public static void main(String[] args){
 
-    App newApp = new App();
-    newApp.menu();
+    App app = new App();
+    Student leon = new Student("Leon", "Vanhooren", "leon.vanhooren@ugent.be", "leoniscool");
+    StudentPassword leonPassword = new StudentPassword("leon.vanhooren@ugent.be", "leoniscool");
+    Student milan = new Student("Milan", "Vissers", "milan.vissers@ugent.be", "milaniscool");
+    StudentPassword milanPassword = new StudentPassword("milan.vissers@ugent.be", "milaniscool");
+
+    Landlord hilde = new Landlord("Hilde", "Dooms", "hilde@vanhooren-dooms.be", "96549695", "hildeiscool");
+    LandlordPassword hildePassword = new LandlordPassword("hilde@vanhooren-dooms.be", "hildeiscool");
+
+    app.students.add(leon);
+    app.studentPasswords.add(leonPassword);
+    app.students.add(milan);
+    app.studentPasswords.add(milanPassword);
+    app.menu();
 
     }
 
