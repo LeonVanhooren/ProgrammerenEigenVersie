@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Student {
 
@@ -7,7 +8,7 @@ public class Student {
     private static int id = 0;
 
     public Student(String firstName, String lastName, String email, String password){
-        this.studentID = id +1;
+        this.studentID = (int)Math.floor(Math.random()*(200000-100000+1)+100000);
         id++;
         this.name = firstName + " " + lastName;
         this.firstName = firstName;

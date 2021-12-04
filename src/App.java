@@ -82,7 +82,7 @@ import java.util.ArrayList;
             if(studentPresent(newStudent)==false){
                 JOptionPane.showMessageDialog(null, "You have successfully added your profile!"+"\n"+"Your student number: "+newStudent.getStudentID()+"\n"+"Remember this well!");
                 //Methode voor checken van correct email?
-                studentOptionsMenu();
+                studentOptionsMenu(newStudent);
 
             }
             else{
@@ -125,7 +125,8 @@ import java.util.ArrayList;
         if(option1 ==JOptionPane.OK_OPTION){
             if(!studentDatabaseCheck(email.getText(), password.getText(), Integer.parseInt(studentNR.getText())).equals(errorStudent)){
                 JOptionPane.showMessageDialog(null,"You are successfully logged in!");
-                studentOptionsMenu();
+
+                studentOptionsMenu(studentDatabaseCheck(email.getText(), password.getText(), Integer.parseInt(studentNR.getText())));
             }
             else{
 
@@ -264,18 +265,19 @@ import java.util.ArrayList;
 
 
 
-    public void studentOptionsMenu(){
-
+    public void studentOptionsMenu(Student student){
+        JLabel welcome = new JLabel("Welcome to this energy conservation app "+student.getName()+"!");
+        JLabel choose = new JLabel("Choose one option!");
         JRadioButtonMenuItem appliances = new JRadioButtonMenuItem("Adding, changing or deleting of appliances?");
         JRadioButtonMenuItem conservation = new JRadioButtonMenuItem("Energy conservation menu?");
         JRadioButtonMenuItem report = new JRadioButtonMenuItem("Energy consumption/conservation report?");
 
 
-        Object[] message = {"Choose one option!",appliances,conservation, report};
+        Object[] message = {welcome,choose, appliances,conservation, report};
 
         int option = JOptionPane.showConfirmDialog(null, message, "Student actions menu", JOptionPane.CANCEL_OPTION);
 
-        if(appliances.isSelected()){appliancesMenu();}
+        if(appliances.isSelected()){appliancesMenu(student);}
         if(conservation.isSelected()){conservationMenu();}
         if(report.isSelected()){studentReportMenu();}
         if(option == JOptionPane.CANCEL_OPTION){
@@ -285,7 +287,7 @@ import java.util.ArrayList;
 
     }
 
-    public void appliancesMenu(){
+    public void appliancesMenu(Student student){
 
 
 /*Change to grid layout.
@@ -320,15 +322,17 @@ import java.util.ArrayList;
 
 
 
-            JRadioButtonMenuItem add = new JRadioButtonMenuItem("Add an appliance");
-            JRadioButtonMenuItem remove = new JRadioButtonMenuItem("Remove an existing appliance");
-            JRadioButtonMenuItem change = new JRadioButtonMenuItem("Change an existing appliance");
+            JRadioButton add = new JRadioButton("Add an appliance");
+            JRadioButton remove = new JRadioButton("Remove an existing appliance");
+            JRadioButton change = new JRadioButton("Change an existing appliance");
 
             Object[] message = {add, remove, change};
             int option = JOptionPane.showConfirmDialog(null, message, "Appliance menu", JOptionPane.OK_CANCEL_OPTION);
 
             if(add.isSelected()){
-                if (addAppliance().equals("OKE"))
+
+                addApplianceKind(student);
+                /*if (addAppliance().equals("OKE"))
                     JOptionPane.showMessageDialog(null, "Your appliance is added to the database!");
                     addAppliance();
                     studentOptionsMenu();
@@ -339,7 +343,7 @@ import java.util.ArrayList;
 
                 if(addAppliance().equals("FOUT"))
                     JOptionPane.showMessageDialog(null, "The information you gave is not correct!");
-                    appliancesMenu();
+                    appliancesMenu();*/
             }
             if(remove.isSelected()){
                 removeAppliance();
@@ -348,27 +352,50 @@ import java.util.ArrayList;
                 changeAppliance();
             }
             if (option == JOptionPane.CANCEL_OPTION) {
-            studentOptionsMenu();
+            studentOptionsMenu(student);
             }
 
 
     }
 
     public boolean removeAppliance(){return true;}
-    public String addAppliance(){
-            String name1, consumption1, efficiency1, QRCode1;
+
+    public void addApplianceKind(Student student){
+            JRadioButton electricity = new JRadioButton("An appliance consuming electricity?");
+            JRadioButton gas = new JRadioButton("An appliance consuming gas?");
+            JRadioButton water = new JRadioButton("An appliance consuming water?");
+
+            Object[] message = {electricity, gas, water};
+            int option = JOptionPane.showConfirmDialog(null, message, "Which kind of appliance?", JOptionPane.OK_CANCEL_OPTION);
+
+            if(electricity.isSelected()){addAppliance("Electricity", student);}
+            if(gas.isSelected()){addAppliance("Gas", student);}
+            if(water.isSelected()){addAppliance("Water", student);}
+            if(option == JOptionPane.CANCEL_OPTION){appliancesMenu(student);}
+    }
+    public String addAppliance(String input, Student student){
+            String nameString, consumptionString, efficiencyString, QRCodeString;
             JTextField name = new JTextField();
             JTextField consumption = new JTextField();
             JTextField efficiency = new JTextField();
             JTextField QRCode = new JTextField();
 
+            if(input.equals("Gas")||input.equals("Electricity")){
+                Object[] message ={"Name: ", name, "Efficiency: ", efficiency, "Consumption: ", consumption,"kWh", "QR-Code: ", QRCode };
+            }
+            else{
+                Object[] message ={"Name: ", name, "Efficiency: ", efficiency, "Consumption: ", consumption+"m³", "QR-Code: ", QRCode };
+            }
+
             Object[] message ={"Name: ", name, "Efficiency: ", efficiency, "Consumption: ", consumption, "QR-Code: ", QRCode };
+
             int option = JOptionPane.showConfirmDialog(null, message, "Add appliance menu", JOptionPane.OK_CANCEL_OPTION);
 
-            name1 = name.getText();
-            consumption1 = consumption.getText();
-            efficiency1 = efficiency.getText();
-            QRCode1 = QRCode.getText();
+
+            nameString = name.getText();
+            consumptionString = consumption.getText();
+            efficiencyString = efficiency.getText();
+            QRCodeString = QRCode.getText();
 
 
 
@@ -417,6 +444,7 @@ import java.util.ArrayList;
 
     App app = new App();
     Student leon = new Student("Leon", "Vanhooren", "leon.vanhooren@ugent.be", "leoniscool");
+    System.out.println(leon.getStudentID());
     StudentPassword leonPassword = new StudentPassword("leon.vanhooren@ugent.be", "leoniscool");
     Student milan = new Student("Milan", "Vissers", "milan.vissers@ugent.be", "milaniscool");
     StudentPassword milanPassword = new StudentPassword("milan.vissers@ugent.be", "milaniscool");
