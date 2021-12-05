@@ -74,4 +74,10 @@ public class Student {
     public int hashCode() {
         return Objects.hash(name, firstName, lastName, email, password);
     }
+
+    public String toString(){
+        String output;
+        output = firstName+" "+lastName+" "+email+" "+password;
+        return output;
+    }
 }

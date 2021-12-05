@@ -444,7 +444,7 @@ import java.sql.*;
     public static void main(String[] args){
 
     App app = new App();
-    Student leon = new Student("Leon", "Vanhooren", "leon.vanhooren@ugent.be", "leoniscool");
+    /*Student leon = new Student("Leon", "Vanhooren", "leon.vanhooren@ugent.be", "leoniscool");
     System.out.println(leon.getStudentID());
     StudentPassword leonPassword = new StudentPassword("leon.vanhooren@ugent.be", "leoniscool");
     Student milan = new Student("Milan", "Vissers", "milan.vissers@ugent.be", "milaniscool");
@@ -459,6 +459,13 @@ import java.sql.*;
     app.students.add(milan);
     app.studentPasswords.add(milanPassword);
     app.menu();
+    */
+
+    dbTest2 test = new dbTest2();
+    app.students=test.databaseRead();
+
+    System.out.println(app.students);
+
 
     }
 
