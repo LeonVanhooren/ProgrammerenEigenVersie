@@ -452,6 +452,7 @@ import java.util.ArrayList;
     Landlord hilde = new Landlord("Hilde", "Dooms", "hilde@vanhooren-dooms.be", "96549695", "hildeiscool");
     LandlordPassword hildePassword = new LandlordPassword("hilde@vanhooren-dooms.be", "hildeiscool");
 
+
     app.students.add(leon);
     app.studentPasswords.add(leonPassword);
     app.students.add(milan);
