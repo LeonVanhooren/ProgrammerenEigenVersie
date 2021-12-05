@@ -2,12 +2,12 @@ import java.util.Objects;
 
 public class Landlord {
 
-    private String name, firstName, lastName, email,telephoneNR;
+    private String name, firstName, lastName, email,telephoneNR, passWord;
     private static int id = 0;
     private int landlordID;
 
 
-    public Landlord(String firstName, String lastName, String email, String telephoneNR){
+    public Landlord(String firstName, String lastName, String email, String telephoneNR, String passWord){
         this.name = firstName+" "+lastName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -15,6 +15,15 @@ public class Landlord {
         this.telephoneNR = telephoneNR;
         this.landlordID = id+1;
         id++;
+        this.passWord = passWord;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
     public String getName() {
