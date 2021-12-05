@@ -15,12 +15,16 @@ public class dbTest {
             System.out.println("studentID\t\tfirstname\t\tlastname\t\temail");
             while (rs.next()) {
 
-                int id = rs.getInt("studentID");
+                String id = rs.getString("studentID");
                 String firstname = rs.getString("firstname");
                 String lastname = rs.getString("lastname");
                 String email = rs.getString("email");
-                System.out.println(id + "\t\t\t" + firstname + "\t\t\t" +lastname
-                        + "\t\t\t" + email);
+                if(lastname.length()>7)
+                System.out.println(id + "\t\t" + firstname + "\t\t\t" +lastname
+                        + "\t\t" +email);
+                else
+                    System.out.println(id + "\t\t" + firstname + "\t\t\t" +lastname
+                            + "\t\t\t" +email);
             }
 
         } catch (SQLException e) {
