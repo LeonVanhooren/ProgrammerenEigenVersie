@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class dbTest {
     private static Connection CON = null;
@@ -12,13 +10,23 @@ public class dbTest {
         try {
             Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connected to the database");
+            Statement stm = connection.createStatement();
+            ResultSet rs = stm.executeQuery("select * from student");
+            System.out.println("studentID\t\tfirstname\t\tlastname\t\temail");
+            while (rs.next()) {
+
+                int id = rs.getInt("studentID");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                String email = rs.getString("email");
+                System.out.println(id + "\t\t\t" + firstname + "\t\t\t" +lastname
+                        + "\t\t\t" + email);
+            }
+
         } catch (SQLException e) {
             System.out.println("FAIL");
             e.printStackTrace();
         }
-
-        System.out.println();
-
 
     }
 }
